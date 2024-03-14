@@ -49,7 +49,7 @@ class Streak:
         Path to save figures and output files. If None, the input folder name
         and base filename is used as the output folder name.
     """
-    def __init__(self, filename, remove_bkg='constant', bkg_box_size=50,
+    def __init__(self, filename, remove_bkg='map', bkg_box_size=50,
                  contour_threshold=3., min_points=10, shape_cut=0.2,
                  area_cut=20., radius_dev_cut=0.5, connectivity_angle=3.,
                  fully_connected='high', output_path=None):
@@ -114,7 +114,7 @@ class Streak:
     def detect(self):
         """Run the pipeline to detect streaks."""
         # Remove background.
-        if self.remove_bkg is 'map':
+        if self.remove_bkg == 'map':
             self._remove_background()
         elif self.remove_bkg is 'constant':
             _mean, self._med, self._std = \

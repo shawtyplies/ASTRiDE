@@ -17,7 +17,7 @@ def test():
    # file_path = join(module_path, '../datasets/samples', 'long.fits')
    # streak = Streak(file_path, output_path='./long/')
 
-    file_path = join(module_path, '../datasets/images', 'swarmstreak4.fits')
+    file_path = join(module_path, '../datasets/images', 'swarmstreak3.fits')
     streak = Streak(file_path, output_path='./long/')
 
     # file_path = '/Users/kim/Temp/hst_13003_54_wfc3_ir_f110w_drz_saved.fits'
