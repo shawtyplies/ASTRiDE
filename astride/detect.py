@@ -116,7 +116,7 @@ class Streak:
         # Remove background.
         if self.remove_bkg == 'map':
             self._remove_background()
-        elif self.remove_bkg is 'constant':
+        elif self.remove_bkg == 'constant':
             _mean, self._med, self._std = \
                 sigma_clipped_stats(self.raw_image)
             self.image = self.raw_image - self._med
