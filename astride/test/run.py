@@ -14,8 +14,8 @@ def test():
 
     module_path = dirname(__file__)
 
-    file_path = join(module_path, '../datasets/images', 'starlink1.fits')
-    streak = Streak(file_path, output_path='./testoutput/')
+    file_path = join(module_path, '../datasets/images', 'starlink2.fits')
+    streak = Streak(file_path, output_path='./long/')
 
    # file_path = join(module_path, '../datasets/samples', 'long.fits')
    # streak = Streak(file_path, output_path='./long/')
