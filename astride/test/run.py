@@ -14,7 +14,9 @@ def test():
 
     module_path = dirname(__file__)
 
-    file_path = join(module_path, '../datasets/images', 'hst1.fits')
+
+    file_name = input("Enter the fits file name: ")
+    file_path = join(module_path, '../datasets/images', file_name)
     streak = Streak(file_path, output_path='./testoutput/')
 
    # file_path = join(module_path, '../datasets/samples', 'long.fits')
