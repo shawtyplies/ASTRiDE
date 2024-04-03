@@ -282,6 +282,12 @@ class Streak:
         pl.axis([0, self.image.shape[1], 0, self.image.shape[0]])
         pl.savefig('%sall.png' % self.output_path)
 
+        # Visualise the background map
+        pl.imshow(self.background_map, cmap='gray')
+        pl.colorbar()
+        pl.title('Background Map')
+        pl.savefig('background_map.png') 
+
         # Plot all individual edges (connected).
         for n, edge in enumerate(edges):
             # Reset.
