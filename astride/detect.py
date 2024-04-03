@@ -50,7 +50,7 @@ class Streak:
         Path to save figures and output files. If None, the input folder name
         and base filename is used as the output folder name.
     """
-    def __init__(self, filename, remove_bkg='map', bkg_box_size=500,
+    def __init__(self, filename, remove_bkg='map', bkg_box_size=50,
                  contour_threshold=3., min_points=10, shape_cut=0.2,
                  area_cut=20., radius_dev_cut=0.5, connectivity_angle=3.,
                  fully_connected='high', output_path=None):
@@ -131,8 +131,8 @@ class Streak:
     def _remove_background(self):
         # Get background map and subtract.
         sigma_clip = SigmaClip(sigma=3., maxiters=10)
-        # bkg_estimator = MedianBackground()
-        bkg_estimator = MMMBackground()
+        bkg_estimator = MedianBackground()
+        # bkg_estimator = MMMBackground()
         self._bkg = Background2D(self.raw_image,
                            (self.bkg_box_size, self.bkg_box_size),
                            filter_size=(3, 3),
