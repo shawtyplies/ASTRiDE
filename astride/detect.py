@@ -207,11 +207,11 @@ class Streak:
         ys.append([current_edge['y_min'], current_edge['y_max']])
 
         # If connected with other edge.
-        if current_edge['connectivity'] != -1:
-            self._find_box(current_edge['connectivity'], edges, xs, ys)
+        # if current_edge['connectivity'] != -1:
+        #    self._find_box(current_edge['connectivity'], edges, xs, ys)
         # Otherwise.
-        else:
-            return xs, ys
+        # else:
+        #    return xs, ys
 
     def plot_figures(self, cut_threshold=3.):
         """
