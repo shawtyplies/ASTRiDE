@@ -212,17 +212,8 @@ class Streak:
         # Otherwise.
         else:
             return xs, ys
-        
-    # Detection of streaks that touch the border
-    def filter_edges_at_borders(edges, image_shape, border_margin=10):
-        for edge in edges:
-            if (edge['x'].min() <= border_margin or edge['x'].max() >= image_shape[1] - border_margin or
-                edge['y'].min() <= border_margin or edge['y'].max() >= image_shape[0] - border_margin):
-                edge['is_border_edge'] = True
-            else:
-                edge['is_border_edge'] = False
-        return edges
 
+     
     def plot_figures(self, cut_threshold=3.):
         """
         Save figures of detected streaks.
