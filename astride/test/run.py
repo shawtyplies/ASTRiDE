@@ -1,7 +1,7 @@
 from os.path import dirname
 from os.path import join
 
-from astride.detect2 import Streak
+from astride.detect3 import Streak
 from astride.utils.logger import Logger
 
 
