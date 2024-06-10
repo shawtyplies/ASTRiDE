@@ -226,3 +226,4 @@ if __name__ == '__main__':
     y = edges[0]['slope'] * x + edges[0]['intercept']
     pl.plot(x, y, 'b-')
     pl.show()
+
