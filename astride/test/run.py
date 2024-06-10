@@ -1,7 +1,7 @@
 from os.path import dirname
 from os.path import join
 
-from astride.detect3 import Streak
+from astride.detect2 import Streak
 from astride.utils.logger import Logger
 
 
@@ -17,7 +17,7 @@ def test():
 
     file_name = input("Enter the fits file name: ")
     file_path = join(module_path, '../datasets/images', file_name)
-    streak = Streak(file_path, output_path='./MMMBackgroundtest/')
+    streak = Streak(file_path, output_path='./testoutput/')
 
     # file_path = join(module_path, '../datasets/samples', 'long.fits')
     # streak = Streak(file_path, output_path='./testoutput/')
