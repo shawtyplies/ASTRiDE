@@ -178,8 +178,30 @@ class EDGE:
         residu = y - (theta[0] * x + theta[1])
 
         return residu
+    
+    def check_center_proximity(self, edge1, edge2, proximity_threshold):
+        """
+        Check if the centers of two edges are within the proximity threshold.
 
-    def connect_edges(self):
+        Parameters
+        ----------
+        edge1 : dict
+            Dictionary representing the first edge.
+        edge2 : dict
+            Dictionary representing the second edge.
+        proximity_threshold : float
+            The maximum allowable distance between the centers of two edges.
+
+        Returns
+        -------
+        bool
+            True if the centers are within the proximity threshold, False otherwise.
+        """
+        distance = np.sqrt((edge1['x_center'] - edge2['x_center'])**2 +
+                           (edge1['y_center'] - edge2['y_center'])**2)
+        return distance <= proximity_threshold
+
+    def connect_edges(self, proximity_threshold=1000):
         """Connect detected edges based on their slopes."""
         # Fitting a straight line to each edge.
         p0 = [0., 0.]
@@ -213,8 +235,9 @@ class EDGE:
                        self.connectivity_angle and \
                        np.abs(c_slope_angle - self.edges[j]['slope_angle']) <= \
                        self.connectivity_angle:
-                        self.edges[i]['connectivity'] = self.edges[j]['index']
-                        break
+                        if self.check_center_proximity(self.edges[i], self.edges[j], proximity_threshold):
+                            self.edges[i]['connectivity'] = self.edges[j]['index']
+                            break
 
 if __name__ == '__main__':
     import pylab as pl
