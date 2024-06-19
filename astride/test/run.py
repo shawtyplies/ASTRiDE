@@ -1,6 +1,6 @@
 import os
 from os.path import dirname, join, splitext
-from astride.detect3 import Streak
+from astride.detect4 import Streak
 from astride.utils.logger import Logger
 
 def process_file(file_path, output_path):
