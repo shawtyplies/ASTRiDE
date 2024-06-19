@@ -202,21 +202,6 @@ class EDGE:
         return distance <= proximity_threshold
 
     def merge_edges(self, edge1, edge2):
-        """
-        Merge two edges into one.
-
-        Parameters
-        ----------
-        edge1 : dict
-            Dictionary representing the first edge.
-        edge2 : dict
-            Dictionary representing the second edge.
-
-        Returns
-        -------
-        dict
-            Dictionary representing the merged edge.
-        """
         merged_edge = {
             'index': edge1['index'],
             'x': np.concatenate((edge1['x'], edge2['x'])),
@@ -229,11 +214,12 @@ class EDGE:
             'connectivity': -1,
             'x_min': 0., 'x_max': 0.,
             'y_min': 0., 'y_max': 0.,
-            'box_plotted': False
+            'box_plotted': False,
+            'slope_angle': 0.  # Initialize slope_angle
         }
         return merged_edge
 
-    def connect_edges(self, proximity_threshold=1000):
+    def connect_edges(self, proximity_threshold=10):
         """Connect detected edges based on their slopes."""
         # Fitting a straight line to each edge.
         p0 = [0., 0.]

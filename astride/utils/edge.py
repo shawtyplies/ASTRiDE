@@ -228,8 +228,6 @@ class EDGE:
                                    (self.edges[i]['x_center'] -
                                     self.edges[j]['x_center'])
                     c_slope_angle = np.arctan(c_slope) * radian2angle
-                    # Debugging
-                    print(f"Edge {i,j}: c_slope={c_slope}, c_slope_ang={c_slope_angle}") 
 
                     if np.abs(c_slope_angle - self.edges[i]['slope_angle']) <= \
                        self.connectivity_angle and \
