@@ -219,7 +219,7 @@ class EDGE:
         }
         return merged_edge
 
-    def connect_edges(self, proximity_threshold=500, angle_range=10):
+    def connect_edges(self, proximity_threshold=500, angle_range=5):
         """Connect detected edges based on their slopes."""
         # Fitting a straight line to each edge.
         p0 = [0., 0.]
@@ -248,7 +248,7 @@ class EDGE:
                 else:
                     j += 1
             i += 1
-            
+
 if __name__ == '__main__':
     import pylab as pl
 
