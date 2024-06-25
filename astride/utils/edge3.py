@@ -217,7 +217,7 @@ class EDGE:
         }
         return merged_edge
 
-    def connect_edges(self, proximity_threshold=500):
+    def connect_edges(self, proximity_threshold=5000):
         """Connect detected edges based on their slopes."""
         # Fitting a straight line to each edge.
         p0 = [0., 0.]
