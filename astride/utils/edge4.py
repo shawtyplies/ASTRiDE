@@ -112,6 +112,7 @@ class EDGE:
     def connect_edges(self, x_proximity_threshold=50, y_proximity_threshold=1000):
         p0 = [0., 0.]
         radian2angle = 180. / np.pi
+
         for edge in self.edges:
             p1, s = leastsq(self.residuals, p0, args=(edge['x'][:-1], edge['y'][:-1]))
             edge['slope'] = p1[0]
@@ -123,16 +124,15 @@ class EDGE:
         while i < len_edges - 1:
             j = i + 1
             while j < len_edges:
-                if np.abs(self.edges[i]['slope_angle'] - self.edges[j]['slope_angle']) <= self.connectivity_angle:
-                    if self.check_center_proximity(self.edges[i], self.edges[j], x_proximity_threshold, y_proximity_threshold):
-                        self.edges[i] = self.merge_edges(self.edges[i], self.edges[j])
-                        del self.edges[j]
-                        len_edges -= 1
-                    else:
-                        j += 1
+                if (np.abs(self.edges[i]['slope_angle'] - self.edges[j]['slope_angle']) <= self.connectivity_angle and
+                    self.check_center_proximity(self.edges[i], self.edges[j], x_proximity_threshold, y_proximity_threshold)):
+                    self.edges[i] = self.merge_edges(self.edges[i], self.edges[j])
+                    del self.edges[j]
+                    len_edges -= 1
                 else:
                     j += 1
             i += 1
+
 
 if __name__ == '__main__':
     import pylab as pl
@@ -247,7 +247,7 @@ if __name__ == '__main__':
     edge = EDGE(contours)
     edge.quantify()
     edge.connect_edges()
-    edges = edge.edges()
+    edges = edge.get_edges()
     print(edges)
 
     # Plot the first edge, which is the only edge in the sample data.
