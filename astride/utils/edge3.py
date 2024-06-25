@@ -219,7 +219,7 @@ class EDGE:
         }
         return merged_edge
 
-    def connect_edges(self, proximity_threshold=500, angle_range=5):
+    def connect_edges(self, proximity_threshold=500):
         """Connect detected edges based on their slopes."""
         # Fitting a straight line to each edge.
         p0 = [0., 0.]
@@ -237,9 +237,10 @@ class EDGE:
         while i < len_edges - 1:
             j = i + 1
             while j < len_edges:
-                angle_difference = np.abs(self.edges[i]['slope_angle'] - self.edges[j]['slope_angle'])
-                if angle_difference <= self.connectivity_angle:
-                    if angle_difference <= angle_range and self.check_center_proximity(self.edges[i], self.edges[j], proximity_threshold):
+                if np.abs(self.edges[i]['slope_angle'] -
+                          self.edges[j]['slope_angle']) <= \
+                   self.connectivity_angle:
+                    if self.check_center_proximity(self.edges[i], self.edges[j], proximity_threshold):
                         self.edges[i] = self.merge_edges(self.edges[i], self.edges[j])
                         del self.edges[j]
                         len_edges -= 1
