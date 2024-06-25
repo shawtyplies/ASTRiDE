@@ -73,7 +73,7 @@ class Streak:
     """
     def __init__(self, filename, remove_bkg='map', bkg_box_size=50,
                  contour_threshold=3., min_points=10, shape_cut=0.2,
-                 area_cut=20., radius_dev_cut=0.5, connectivity_angle=30.,proximity_threshold=500.,
+                 area_cut=20., radius_dev_cut=0.5, connectivity_angle=30.,x_proximity_threshold=50., y_proximity_threshold=1000.,
                  fully_connected='high', output_path=None):
         hdulist = fits.open(filename)
         raw_image = hdulist[0].data.astype(np.float64)
@@ -121,7 +121,8 @@ class Streak:
         self.radius_dev_cut = radius_dev_cut
         self.connectivity_angle = connectivity_angle
         self.fully_connected = fully_connected
-        self.proximity_threshold = proximity_threshold
+        self.x_proximity_threshold = x_proximity_threshold
+        self.y_proximity_threshold = y_proximity_threshold
 
         # Set output path.
         if output_path is None:
@@ -192,7 +193,7 @@ class Streak:
 
         # Filter the edges, so only streak remains.
         edge.filter_edges()
-        edge.connect_edges(self.proximity_threshold)
+        edge.connect_edges(self.x_proximity_threshold, self.y_proximity_threshold)
 
         # Set streaks variable.
         self.streaks = edge.get_edges()
