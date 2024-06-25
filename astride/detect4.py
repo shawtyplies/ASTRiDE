@@ -14,7 +14,7 @@ from astropy.wcs import WCS
 from photutils import Background2D, MedianBackground
 from photutils.background import MMMBackground
 
-from astride.utils.edge2 import EDGE
+from astride.utils.edge3 import EDGE
 
 
 def pad_image(image, pad_width=10):
