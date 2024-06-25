@@ -109,7 +109,7 @@ class EDGE:
         }
         return merged_edge
 
-    def connect_edges(self, x_proximity_threshold=5000, y_proximity_threshold=5000):
+    def connect_edges(self, x_proximity_threshold=100, y_proximity_threshold=1000):
         p0 = [0., 0.]
         radian2angle = 180. / np.pi
         for edge in self.edges:
@@ -133,6 +133,6 @@ class EDGE:
                 else:
                     j += 1
             i += 1
-            
+
 if __name__ == '__main__':
     import pylab as pl
