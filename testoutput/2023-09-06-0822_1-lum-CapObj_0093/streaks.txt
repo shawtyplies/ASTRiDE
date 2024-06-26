@@ -1,2 +1,3 @@
 #ID x_center y_center area perimeter shape_factor radius_deviation slope_angle intercept connectivity
- 1 5241.90 2709.17   67.8   71.7  0.166   0.52 65.06 -8564.24 -1
+ 1   62.01  539.92   18.3   36.7  0.171   0.59 60.90  428.65 -1
+ 2 5241.90 2709.17   67.8   71.7  0.166   0.52 65.06 -8564.24 -1
