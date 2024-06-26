@@ -1,5 +1,5 @@
 import os
-from os.path import join, splitext
+from os.path import join, splitext, isfile, abspath
 from astride.detect4 import Streak
 from astride.utils.logger import Logger
 
@@ -16,13 +16,25 @@ def test():
     logger.info('Start.')
 
     input_folder = input("Enter the input folder path containing FITS files: ").strip()
+    input_folder = abspath(input_folder)  # Convert to absolute path
     output_base_folder = './testoutput/'
 
     if not os.path.exists(input_folder):
         logger.error(f'Input folder does not exist: {input_folder}')
         return
 
-    file_names = [f for f in os.listdir(input_folder) if f.lower().endswith('.fits')]
+    logger.info(f'Absolute path of the input folder: {input_folder}')
+    logger.info(f'Listing files in the input folder: {input_folder}')
+    
+    try:
+        file_names = os.listdir(input_folder)
+        logger.info(f'Files and directories found: {file_names}')
+    except Exception as e:
+        logger.error(f'Error accessing the input folder: {e}')
+        return
+
+    # Only keep files that are FITS files
+    file_names = [f for f in file_names if isfile(join(input_folder, f)) and f.lower().endswith('.fits')]
     
     if not file_names:
         logger.error(f'No FITS files found in the input folder: {input_folder}')
