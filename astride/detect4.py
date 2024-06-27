@@ -288,7 +288,7 @@ class Streak:
             image[image < cut_threshold * self._std] = np.nan
             pl.imshow(image, cmap='Greys_r')
             pl.xlim(0, self.raw_image.shape[1])
-            pl.ylim(0, self.raw_image.shape[0])
+            pl.ylim(self.raw_image.shape[0], 0)
             pl.xlabel("X")
             pl.ylabel("Y")
             pl.colorbar(fraction=0.03).set_label("Pixel Value (e/s)")
@@ -305,7 +305,7 @@ class Streak:
                 image[image < cut_threshold * self._std] = np.nan
                 ax.imshow(image, cmap='Greys_r')
                 ax.set_xlim(0, self.raw_image.shape[1])
-                ax.set_ylim(0, self.raw_image.shape[0])
+                ax.set_ylim(self.raw_image.shape[0], 0)
                 ax.set_xlabel("RA")
                 ax.set_ylabel("Dec")
                 ax.coords.grid(color='white', ls='solid')
@@ -322,7 +322,7 @@ class Streak:
             for streak in self.streaks:
                 pl.plot(streak['x'], streak['y'], linewidth=2.5)
             pl.xlim(0, self.raw_image.shape[1])
-            pl.ylim(0, self.raw_image.shape[0])
+            pl.ylim(self.raw_image.shape[0], 0)
             pl.xlabel("X")
             pl.ylabel("Y")
             pl.colorbar(fraction=0.03).set_label("Pixel Value (e/s)")
@@ -358,7 +358,7 @@ class Streak:
 
         pl.xlabel('X/pixel')
         pl.ylabel('Y/pixel')
-        pl.axis([0, self.image.shape[1], 0, self.image.shape[0]])
+        pl.axis([0, self.image.shape[1], self.raw_image.shape[0], 0])
         pl.savefig('%sall.png' % self.output_path)
 
         # Visualise the background map
@@ -419,7 +419,7 @@ class Streak:
                         color='red')
 
             pl.xlim(0, self.raw_image.shape[1])
-            pl.ylim(0, self.raw_image.shape[0])
+            pl.ylim(self.raw_image.shape[0], 0)
             pl.xlabel("X")
             pl.ylabel("Y")
             pl.colorbar(fraction=0.03).set_label("Pixel Value (e/s)")
