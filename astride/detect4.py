@@ -262,7 +262,7 @@ class Streak:
             os.makedirs(self.output_path)
 
         # Plot original image.
-        pl.imshow(self.raw_image, origin='lower', cmap='Greys_r')
+        pl.imshow(self.raw_image, cmap='Greys_r')
         pl.savefig(self.output_path + 'raw_image.png')
         pl.close()
 
@@ -279,14 +279,14 @@ class Streak:
         plot_data[np.where(self.image < med - cut_threshold * std)] = \
             med - cut_threshold * std
         pl.clf()
-        pl.imshow(plot_data, origin='lower', cmap='gray')
+        pl.imshow(plot_data, cmap='gray')
 
         # Plot background removed image.
         if self.image is not None:
             fig = pl.figure()
             image = self.image.copy()
             image[image < cut_threshold * self._std] = np.nan
-            pl.imshow(image, origin='lower', cmap='Greys_r')
+            pl.imshow(image, cmap='Greys_r')
             pl.xlim(0, self.raw_image.shape[1])
             pl.ylim(0, self.raw_image.shape[0])
             pl.xlabel("X")
@@ -303,7 +303,7 @@ class Streak:
                 fig = pl.figure()
                 ax = fig.add_subplot(111, projection=wcs)
                 image[image < cut_threshold * self._std] = np.nan
-                ax.imshow(image, origin='lower', cmap='Greys_r')
+                ax.imshow(image, cmap='Greys_r')
                 ax.set_xlim(0, self.raw_image.shape[1])
                 ax.set_ylim(0, self.raw_image.shape[0])
                 ax.set_xlabel("RA")
@@ -318,7 +318,7 @@ class Streak:
             fig = pl.figure()
             image = self.image.copy()
             image[image < cut_threshold * self._std] = np.nan
-            pl.imshow(image, origin='lower', cmap='Greys_r')
+            pl.imshow(image, cmap='Greys_r')
             for streak in self.streaks:
                 pl.plot(streak['x'], streak['y'], linewidth=2.5)
             pl.xlim(0, self.raw_image.shape[1])
@@ -394,7 +394,7 @@ class Streak:
             fig = pl.figure()
             image = self.image.copy()
             image[image < cut_threshold * self._std] = np.nan
-            pl.imshow(image, origin='lower', cmap='Greys_r')
+            pl.imshow(image, cmap='Greys_r')
 
             edges = self.streaks
             for edge in edges:
