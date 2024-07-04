@@ -12,6 +12,7 @@ from astropy import coordinates
 from astropy import units as u
 from astropy.wcs import WCS
 from photutils import Background2D, MedianBackground
+from photutils.background import MMMBackground
 
 from astride.utils.edge import EDGE
 
@@ -49,9 +50,9 @@ class Streak:
         Path to save figures and output files. If None, the input folder name
         and base filename is used as the output folder name.
     """
-    def __init__(self, filename, remove_bkg='constant', bkg_box_size=50,
+    def __init__(self, filename, remove_bkg='map', bkg_box_size=50,
                  contour_threshold=3., min_points=10, shape_cut=0.2,
-                 area_cut=20., radius_dev_cut=0.5, connectivity_angle=3.,
+                 area_cut=20., radius_dev_cut=0.5, connectivity_angle=-1.,
                  fully_connected='high', output_path=None):
         hdulist = fits.open(filename)
         raw_image = hdulist[0].data.astype(np.float64)
@@ -114,9 +115,9 @@ class Streak:
     def detect(self):
         """Run the pipeline to detect streaks."""
         # Remove background.
-        if self.remove_bkg is 'map':
+        if self.remove_bkg == 'map':
             self._remove_background()
-        elif self.remove_bkg is 'constant':
+        elif self.remove_bkg == 'constant':
             _mean, self._med, self._std = \
                 sigma_clipped_stats(self.raw_image)
             self.image = self.raw_image - self._med
@@ -131,6 +132,7 @@ class Streak:
         # Get background map and subtract.
         sigma_clip = SigmaClip(sigma=3., maxiters=10)
         bkg_estimator = MedianBackground()
+        # bkg_estimator = MMMBackground()
         self._bkg = Background2D(self.raw_image,
                            (self.bkg_box_size, self.bkg_box_size),
                            filter_size=(3, 3),
@@ -211,6 +213,7 @@ class Streak:
         else:
             return xs, ys
 
+     
     def plot_figures(self, cut_threshold=3.):
         """
         Save figures of detected streaks.
@@ -279,6 +282,12 @@ class Streak:
         pl.ylabel('Y/pixel')
         pl.axis([0, self.image.shape[1], 0, self.image.shape[0]])
         pl.savefig('%sall.png' % self.output_path)
+
+        # Visualise the background map
+        pl.imshow(self.background_map, cmap='gray')
+        pl.colorbar()
+        pl.title('Background Map')
+        pl.savefig('background_map.png') 
 
         # Plot all individual edges (connected).
         for n, edge in enumerate(edges):

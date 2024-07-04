@@ -1,5 +1,6 @@
-import os
-from os.path import join, splitext, isfile, abspath
+from os.path import dirname
+from os.path import join
+
 from astride.detect import Streak
 from astride.utils.logger import Logger
 from astropy.io import fits
