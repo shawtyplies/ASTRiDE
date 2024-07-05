@@ -51,8 +51,8 @@ class Streak:
         and base filename is used as the output folder name.
     """
     def __init__(self, filename, remove_bkg='map', bkg_box_size=50,
-                 contour_threshold=3., min_points=10, shape_cut=0.2,
-                 area_cut=20., radius_dev_cut=0.5, connectivity_angle=-1.,
+                 contour_threshold=3., min_points=5, shape_cut=0.2,
+                 area_cut=10., radius_dev_cut=0.5, connectivity_angle=30.,
                  fully_connected='high', output_path=None):
         hdulist = fits.open(filename)
         raw_image = hdulist[0].data.astype(np.float64)

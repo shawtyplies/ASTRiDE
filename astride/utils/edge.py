@@ -22,8 +22,8 @@ class EDGE:
     connectivity_angle: float, optional
         An maximum angle to connect each separated edge.
     """
-    def __init__(self, contours, min_points=0, shape_cut=0.2,
-                 area_cut=10., radius_dev_cut=0.5, connectivity_angle=45.):
+    def __init__(self, contours, min_points=5, shape_cut=0.2,
+                 area_cut=10., radius_dev_cut=0.5, connectivity_angle=30.):
         # Set global values.
         self.shape_cut = shape_cut
         self.area_cut = area_cut

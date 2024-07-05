@@ -4,7 +4,7 @@ from os.path import dirname
 from os.path import join
 from posixpath import abspath, splitext
 
-from astride.detect4 import Streak
+from astride.detect import Streak
 from astride.utils.logger import Logger
 from astropy.io import fits
 

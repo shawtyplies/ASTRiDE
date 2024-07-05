@@ -1,2 +1,2 @@
-#ID x_center y_center area perimeter shape_factor radius_deviation slope_angle intercept connectivity
- 1 3278.37  457.28 2571.8  962.1  0.035   0.58 -82.76 26263.65 -1
+#ID x_center y_center area perimeter shape_factor radius_deviation slope_angle intercept connectivity ep1_x ep1_y ep2_x ep2_y length thickness
+ 1 3268.39  447.14 2572.8  962.6  0.035   0.58 -82.77 26194.86 -1 3245.05 629.38 3291.54 263.11  369.2    6.5
