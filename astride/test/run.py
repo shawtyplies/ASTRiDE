@@ -1,6 +1,6 @@
 import os
 from os.path import abspath, join, splitext, isfile
-from astride.detect import Streak
+from astride.detect4 import Streak
 from astride.utils.logger import Logger
 from astropy.io import fits
 from skimage.io import imread  # Add this import to handle JPG files
