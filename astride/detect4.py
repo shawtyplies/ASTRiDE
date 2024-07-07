@@ -3,6 +3,7 @@ import sys
 
 import numpy as np
 import pylab as pl
+from PIL import Image
 
 from skimage import measure, io
 from astropy.io import fits
@@ -75,8 +76,8 @@ class Streak:
                  contour_threshold=3., min_points=5, shape_cut=0.2,
                  area_cut=10., radius_dev_cut=0.5, connectivity_angle=30.,x_proximity_threshold=100., y_proximity_threshold=1000.,
                  fully_connected='high', output_path=None):
-        hdulist = fits.open(filename)
-        raw_image = io.imread(filename).astype(np.float64)
+        image = Image.open(filename)
+        raw_image = np.array(image).astype(np.float64)
 
         # Raw image.
         self.raw_image = raw_image
