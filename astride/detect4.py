@@ -4,7 +4,7 @@ import sys
 import numpy as np
 import pylab as pl
 
-from skimage import measure
+from skimage import measure, io
 from astropy.io import fits
 from astropy.stats import sigma_clipped_stats
 from astropy.stats import SigmaClip
@@ -76,18 +76,7 @@ class Streak:
                  area_cut=10., radius_dev_cut=0.5, connectivity_angle=30.,x_proximity_threshold=100., y_proximity_threshold=1000.,
                  fully_connected='high', output_path=None):
         hdulist = fits.open(filename)
-        raw_image = hdulist[0].data.astype(np.float64)
-
-        # check WCS info
-        try:
-            wcsinfo = hdulist[0].header["CTYPE1"]
-            if wcsinfo:
-                self.wcsinfo = True
-                self.filename = filename
-        except:
-            self.wcsinfo = False
-
-        hdulist.close()
+        raw_image = io.imread(filename).astype(np.float64)
 
         # Raw image.
         self.raw_image = raw_image
@@ -295,24 +284,6 @@ class Streak:
             pl.savefig(self.output_path + 'background_removed.png')
             pl.close()
 
-            # If wcs info is available, plot with WCS
-            if self.wcsinfo:
-                hdu = fits.open(self.filename)[0]
-                wcs = WCS(hdu.header)
-
-                fig = pl.figure()
-                ax = fig.add_subplot(111, projection=wcs)
-                image[image < cut_threshold * self._std] = np.nan
-                ax.imshow(image, cmap='Greys_r')
-                ax.set_xlim(0, self.raw_image.shape[1])
-                ax.set_ylim(self.raw_image.shape[0], 0)
-                ax.set_xlabel("RA")
-                ax.set_ylabel("Dec")
-                ax.coords.grid(color='white', ls='solid')
-                ax.coords[0].set_major_formatter('hh:mm:ss')
-                pl.savefig(self.output_path + 'background_removed_wcs.png')
-                pl.close()
-
         # Plot streaks.
         if self.streaks is not None:
             fig = pl.figure()
@@ -464,41 +435,6 @@ class Streak:
             _ = e
             pass
 
-    def xy2sky2(self, filename, x, y):
-        """
-        Converts physical coordinates to WCS coordinates for STDOUT.
-
-        Parameters
-        ----------
-        filename: str
-            FITS image file name with path.
-        x: float
-            x coordinate of object.
-        y: float
-            y coordinate of object.
-        sep: float
-            delimiter for HMSDMS format.
-
-        Returns
-        -------
-        astcoords: list
-            a list of coordinates.
-        """
-
-        try:
-            header = fits.getheader(filename)
-            w = WCS(header)
-            astcoords_deg = w.wcs_pix2world([[x, y]], 0)
-
-            astcoords = coordinates.SkyCoord(
-                astcoords_deg * u.deg, frame='icrs')
-
-            return astcoords[0]
-
-        except Exception as e:
-            _ = e
-            pass
-
     def write_outputs(self):
         """Write information of detected streaks."""
 
@@ -506,45 +442,21 @@ class Streak:
             os.makedirs(self.output_path)
 
         fp1 = open('%sstreaks.txt' % self.output_path, 'w')
-        if not self.wcsinfo:
-            fp1.writelines('#ID x_center y_center area perimeter shape_factor ' +
+        fp1.writelines('#ID x_center y_center area perimeter shape_factor ' +
                           'radius_deviation slope_angle intercept ' +
                           'connectivity\n')
-            for n, edge in enumerate(self.streaks):
-                line_str = '%2d %7.2f %7.2f %6.1f %6.1f %6.3f ' + \
+        for n, edge in enumerate(self.streaks):
+            line_str = '%2d %7.2f %7.2f %6.1f %6.1f %6.3f ' + \
                            '%6.2f %5.2f %7.2f %2d\n'
-                line = line_str % \
-                       (
-                           edge['index'], edge['x_center'], edge['y_center'],
-                           edge['area'], edge['perimeter'],
-                           edge['shape_factor'],
-                           edge['radius_deviation'], edge['slope_angle'],
-                           edge['intercept'], edge['connectivity']
-                       )
-                fp1.writelines(line)
-        elif self.wcsinfo:
-            fp1.writelines('#ID x_center y_center ra(hms) dec(dms) ra(deg) ' +
-                          'dec(deg) area perimeter shape_factor ' +
-                          'radius_deviation slope_angle intercept ' +
-                          'connectivity\n')
-            for n, edge in enumerate(self.streaks):
-                line_str = '%2d %7.2f %7.2f %s %s %s %6.1f %6.1f ' + \
-                           '%6.3f %6.2f %5.2f %7.2f %2d\n'
-                line = line_str % \
-                       (
-                           edge['index'], edge['x_center'], edge['y_center'],
-                           self.xy2sky(self.filename, edge['x_center'],
-                                       edge['y_center']),
-                           self.xy2sky2(self.filename, edge['x_center'],
-                                        edge['y_center']).ra.degree,
-                           self.xy2sky2(self.filename, edge['x_center'],
-                                        edge['y_center']).dec.degree,
-                           edge['area'], edge['perimeter'],
-                           edge['shape_factor'],
-                           edge['radius_deviation'], edge['slope_angle'],
-                           edge['intercept'], edge['connectivity']
-                       )
-                fp1.writelines(line)
+            line = line_str % \
+                    (
+                        edge['index'], edge['x_center'], edge['y_center'],
+                        edge['area'], edge['perimeter'],
+                        edge['shape_factor'],
+                        edge['radius_deviation'], edge['slope_angle'],
+                        edge['intercept'], edge['connectivity']
+                    )
+            fp1.writelines(line)
         fp1.close()
 
 
