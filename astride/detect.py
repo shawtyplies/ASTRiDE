@@ -261,7 +261,7 @@ class Streak:
 
         # Plot boxes.
         # Box margin in pixel.
-        box_margin = 10
+        box_margin = 0
         for n, edge in enumerate(edges):
             # plot boxes around the edge.
             if not edge['box_plotted']:
