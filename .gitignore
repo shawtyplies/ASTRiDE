@@ -5,3 +5,5 @@ astride.egg-info
 *.pyc
 /astride/datasets/samples/long/
 .DS_Store
+venv/ 
+venv
