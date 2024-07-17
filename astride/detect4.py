@@ -71,9 +71,9 @@ class Streak:
         Path to save figures and output files. If None, the input folder name
         and base filename is used as the output folder name.
     """
-    def __init__(self, filename, remove_bkg='map', bkg_box_size=50,
-                 contour_threshold=3., min_points=5, shape_cut=0.2,
-                 area_cut=10., radius_dev_cut=0.5, connectivity_angle=30.,x_proximity_threshold=100., y_proximity_threshold=1000.,
+    def __init__(self, filename, remove_bkg='constant', bkg_box_size=50,
+                 contour_threshold=1., min_points=0, shape_cut=0.2,
+                 area_cut=5., radius_dev_cut=0.5, connectivity_angle=30.,x_proximity_threshold=100., y_proximity_threshold=1000.,
                  fully_connected='high', output_path=None):
         hdulist = fits.open(filename)
         raw_image = hdulist[0].data.astype(np.float64)
