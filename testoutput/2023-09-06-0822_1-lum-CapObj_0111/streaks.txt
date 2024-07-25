@@ -1,1 +1,1 @@
-#ID x_center y_center area perimeter shape_factor radius_deviation slope_angle intercept connectivity ep1_x ep1_y ep2_x ep2_y length thickness
+#ID x_center y_center area perimeter shape_factor radius_deviation slope_angle intercept connectivity
