@@ -73,7 +73,7 @@ class Streak:
     """
     def __init__(self, filename, remove_bkg='map', bkg_box_size=50,
                  contour_threshold=3., min_points=5, shape_cut=0.2,
-                 area_cut=10., radius_dev_cut=0.5, connectivity_angle=30.,x_proximity_threshold=100., y_proximity_threshold=10000.,
+                 area_cut=10., radius_dev_cut=0.5, connectivity_angle=3.,x_proximity_threshold=500., y_proximity_threshold=500.,
                  fully_connected='high', output_path=None):
         hdulist = fits.open(filename)
         raw_image = hdulist[0].data.astype(np.float64)

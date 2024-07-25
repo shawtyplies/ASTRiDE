@@ -3,7 +3,7 @@ from scipy.optimize import leastsq
 
 class EDGE:
     def __init__(self, contours, min_points=5, shape_cut=0.2,
-                 area_cut=10., radius_dev_cut=0.5, connectivity_angle=30.):
+                 area_cut=10., radius_dev_cut=0.5, connectivity_angle=3.):
         self.shape_cut = shape_cut
         self.area_cut = area_cut
         self.radius_dev_cut = radius_dev_cut
@@ -109,7 +109,7 @@ class EDGE:
         }
         return merged_edge
 
-    def connect_edges(self, x_proximity_threshold=100, y_proximity_threshold=10000):
+    def connect_edges(self, x_proximity_threshold=500, y_proximity_threshold=500):
         p0 = [0., 0.]
         radian2angle = 180. / np.pi
 
