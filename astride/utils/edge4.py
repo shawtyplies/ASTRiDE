@@ -109,7 +109,7 @@ class EDGE:
         }
         return merged_edge
 
-    def connect_edges(self, x_proximity_threshold=500, y_proximity_threshold=500):
+    def connect_edges(self, x_proximity_threshold=50, y_proximity_threshold=100):
         p0 = [0., 0.]
         radian2angle = 180. / np.pi
 
